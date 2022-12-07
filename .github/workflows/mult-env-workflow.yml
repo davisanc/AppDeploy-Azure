@@ -1,5 +1,7 @@
 name: Multiple Environment Workflow
 
+# also triggers on push
+
 on:
   push:
     branches: [ main ] 
