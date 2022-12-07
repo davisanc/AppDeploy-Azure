@@ -13,6 +13,13 @@ env:
   DEV_WEBAPP_NAME: "DEV-AppDeploy-Azure-${{ github.event.pull_request.number}}"
 
 jobs:
+  build:
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+
+
   buildImage:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
