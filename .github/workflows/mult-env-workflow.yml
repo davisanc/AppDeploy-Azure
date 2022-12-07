@@ -9,6 +9,9 @@ on:
 
 env:
   # this can be created on GH action secrets
+  # Use OpenID Connect (OIDC) with a Azure service principal using a Federated Identity Credential https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#use-the-azure-login-action-with-openid-connect
+  # 
+
   # The name of the resource group to be created.
   DEV_RG_NAME: "RG-Dev-AppDeploy-Azure-dasanc"
   # DEV_RG_NAME: "RG-Dev-AppDeploy-Azure-${{ github.event.pull_request.number}}"
