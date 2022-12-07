@@ -9,13 +9,15 @@ on:
 
 env:
   # The name of the resource group to be created.
-  DEV_RG_NAME: "RG-Dev-AppDeploy-Azure-${{ github.event.pull_request.number}}"
+  DEV_RG_NAME: "RG-Dev-AppDeploy-Azure-dasanc"
+  # DEV_RG_NAME: "RG-Dev-AppDeploy-Azure-${{ github.event.pull_request.number}}"
 
   # The location to store the meta data for the deployment.
   DEV_LOCATION: "westeurope"
 
   # The name of the WebApp
-  DEV_WEBAPP_NAME: "DEV-AppDeploy-Azure-${{ github.event.pull_request.number}}"
+  DEV_WEBAPP_NAME: "DEV-AppDeploy-Azure-dasanc"
+  # DEV_WEBAPP_NAME: "DEV-AppDeploy-Azure-${{ github.event.pull_request.number}}"
 
 jobs:
   buildImage:
