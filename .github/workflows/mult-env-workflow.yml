@@ -22,11 +22,19 @@ jobs:
     - name: checkout branch
       uses: actions/checkout@v2
 
-    # log into Azure
-    - name: "Login via Azure CLI"
-      uses: azure/login@v1
+    # log into Azure ## NOT USED THIS METHOD
+    # - name: "Login via Azure CLI"
+      # uses: azure/login@v1
+      # with:
+        # creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+    # Logs in with your Azure credentials
+    - name: Azure login
+      uses: azure/login@v1.4.3
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     # authenticate into Docker
     - name: "docker login"
@@ -78,11 +86,19 @@ jobs:
     - name: checkout branch
       uses: actions/checkout@v2
 
-    # log into Azure
-    - name: "Login via Azure CLI"
-      uses: azure/login@v1
+    # log into Azure ## NOT USED THIS METHOD
+    # - name: "Login via Azure CLI"
+      # uses: azure/login@v1
+      # with:
+        # creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # Logs in with your Azure credentials
+    - name: Azure login
+      uses: azure/login@v1.4.3
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     # deploy infrastructure with Azure Bicep
     - name: Deploy infrastructure
@@ -133,11 +149,11 @@ jobs:
     - name: checkout branch
       uses: actions/checkout@v2
     
-    # log into Azure
-    - name: "Login via Azure CLI"
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    # log into Azure ## NOT USED THIS METHOD
+    # - name: "Login via Azure CLI"
+      # uses: azure/login@v1
+      # with:
+        # creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     # deploy infrastructure with Azure Bicep
     - name: Deploy infrastructure
@@ -201,11 +217,19 @@ jobs:
     - name: checkout branch
       uses: actions/checkout@v2
     
-    # log into Azure
-    - name: "Login via Azure CLI"
-      uses: azure/login@v1
+    # log into Azure ## NOT USED THIS METHOD
+    # - name: "Login via Azure CLI"
+      # uses: azure/login@v1
+      # with:
+        # creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    # Logs in with your Azure credentials
+    - name: Azure login
+      uses: azure/login@v1.4.3
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     # deploy infrastructure with Azure Bicep
     - name: Deploy infrastructure
@@ -269,11 +293,19 @@ jobs:
     - name: checkout branch
       uses: actions/checkout@v2
     
-    # log into Azure
-    - name: "Login via Azure CLI"
-      uses: azure/login@v1
+    # log into Azure ## NOT USED THIS METHOD
+    # - name: "Login via Azure CLI"
+      # uses: azure/login@v1
+      # with:
+        # creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    # Logs in with your Azure credentials
+    - name: Azure login
+      uses: azure/login@v1.4.3
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     # deploy infrastructure with Azure Bicep
     - name: Deploy infrastructure
