@@ -14,6 +14,11 @@ env:
 
 jobs:
   buildImage:
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
 
