@@ -77,6 +77,10 @@ jobs:
         # subscription-token: ${{ secrets.AZ_SUBSCRIPTION_TOKEN }}
 
   deploy_container:
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
 
     runs-on: ubuntu-latest
     name: Create and Deploy Container to Azure
@@ -142,7 +146,12 @@ jobs:
     
  
   deploy_test:
-        
+    
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+
     runs-on: ubuntu-latest
     name: Deploy to Test
     needs: deploy_container
@@ -210,7 +219,12 @@ jobs:
 
 
   deploy_staging:
-        
+    
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+
     runs-on: ubuntu-latest
     name: Deploy to Staging
     needs: deploy_test
@@ -286,6 +300,11 @@ jobs:
 
     
   deploy_production:
+
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
         
     runs-on: ubuntu-latest
     name: Deploy to Production
