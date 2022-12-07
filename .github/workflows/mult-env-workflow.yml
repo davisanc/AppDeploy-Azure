@@ -1,6 +1,9 @@
 name: Multiple Environment Workflow
 
-on: pull_request
+on:
+  push:
+    branches: [ main ] 
+  pull_request: 
 
 env:
   # The name of the resource group to be created.
