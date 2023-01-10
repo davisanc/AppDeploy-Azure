@@ -30,33 +30,6 @@ jobs:
       contents: read
       id-token: write
 
-    # we add a job to do Defender for DevOps scans
-    name: Defender for DevOps scanning
-    runs-on: windows-latest
-    steps:
-    # Checkout your code repository
-    - uses: actions/checkout@v2
-     # Install dotnet
-    - uses: actions/setup-dotnet@v1
-      with:
-       dotnet-version: |
-         5.0.x
-         6.0.x
-   # Run analyzers
-    - name: Run Microsoft Security DevOps Analysis
-      uses: microsoft/security-devops-action@preview
-      id: msdo
-     #  with:
-        # categories: 'IaC'
-   # Upload alerts to the Security tab
-    - name: Upload alerts to Security tab
-      uses: github/codeql-action/upload-sarif@v1
-      with:
-       sarif_file: ${{ steps.msdo.outputs.sarifFile }}  
-
-
-
-    ####### end of DfD job  
       
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
@@ -103,6 +76,31 @@ jobs:
       continue-on-error: true
       with:
         image-name: ${{ secrets.DOCKER_LOGIN_SERVER }}/appdeployazure:${{ github.sha }} 
+      
+
+      #### Defender for DevOps step
+
+      # Checkout your code repository
+    - uses: actions/checkout@v2
+     # Install dotnet
+    - uses: actions/setup-dotnet@v1
+      with:
+       dotnet-version: |
+         5.0.x
+         6.0.x
+   # Run analyzers
+    - name: Run Microsoft Security DevOps Analysis
+      uses: microsoft/security-devops-action@preview
+      id: msdo
+     #  with:
+        # categories: 'IaC'
+   # Upload alerts to the Security tab
+    - name: Upload alerts to Security tab
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+       sarif_file: ${{ steps.msdo.outputs.sarifFile }}
+
+      ### end of Defender for DevOps scan
 
     # Sending logs to AppInsights # NOT NEEDED
     # - name: Post logs to appinsights
