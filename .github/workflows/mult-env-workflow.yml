@@ -8,7 +8,7 @@ on:
   pull_request: 
 
 env:
-  # this can be created on GH action secrets
+  # this can be created on GH action secrets #
   # Use OpenID Connect (OIDC) with a Azure service principal using a Federated Identity Credential https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#use-the-azure-login-action-with-openid-connect
   # created a specific ACR to find vulnerabilities easily in Defender
 
@@ -101,7 +101,7 @@ jobs:
       with:
        sarif_file: ${{ steps.msdo.outputs.sarifFile }}
 
-      ### end of Defender for DevOps scan
+      ### end of Defender for DevOps scan ####
 
     # Sending logs to AppInsights # NOT NEEDED
     # - name: Post logs to appinsights
