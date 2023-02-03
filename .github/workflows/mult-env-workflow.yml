@@ -71,7 +71,6 @@ jobs:
         tags: ${{ secrets.DOCKER_LOGIN_SERVER }}/appdeployazure:${{ github.sha }}
 
     # using terrascan to scan terraform
-    - uses: cloudposse/terrascan@v0.1.0
     - name: Scan Terraform templates
       uses: tenable/terrascan-action@main
       with:
