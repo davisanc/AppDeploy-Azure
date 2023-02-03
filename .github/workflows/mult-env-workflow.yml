@@ -73,9 +73,11 @@ jobs:
     # using terrascan to scan terraform
     - uses: cloudposse/terrascan@v0.1.0
     - name: Scan Terraform templates
-      uses: cloudposse/terrascan@v0.1.0
+      uses: tenable/terrascan-action@main
       with:
-        args: scan -t .
+        iac_type: 'terraform'
+        iac_version: 'v14'
+        policy_type: 'azure'
 
 
     # Scanning Images using Microsoft Defender
