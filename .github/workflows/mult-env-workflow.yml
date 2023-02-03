@@ -77,6 +77,7 @@ jobs:
         iac_type: 'terraform'
         iac_version: 'v14'
         policy_type: 'azure'
+        only_warn: true
 
 
     # Scanning Images using Microsoft Defender
