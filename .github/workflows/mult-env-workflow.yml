@@ -70,6 +70,14 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKER_LOGIN_SERVER }}/appdeployazure:${{ github.sha }}
 
+    # using terrascan to scan terraform
+    - uses: cloudposse/terrascan@v0.1.0
+    - name: Scan Terraform templates
+      uses: cloudposse/terrascan@v0.1.0
+      with:
+        args: scan -t .
+
+
     # Scanning Images using Microsoft Defender
     - uses: Azure/container-scan@v0 
       name: Scan image for vulnerabilities
