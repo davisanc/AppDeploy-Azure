@@ -2,6 +2,8 @@ name: Multiple Environment Workflow
 
 # also triggers on push
 
+#this is a command to trigger PR
+
 on:
   push:
     branches: [ main ] 
