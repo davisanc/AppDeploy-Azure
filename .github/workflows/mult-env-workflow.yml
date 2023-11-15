@@ -101,6 +101,11 @@ jobs:
        dotnet-version: |
          5.0.x
          6.0.x
+
+    - name: Create OCI Image
+      run: |
+          docker pull nginx:latest
+          skopeo copy docker-daemon:nginx:alpine oci:nginx
    # Run analyzers
     - name: Run Microsoft Security DevOps Analysis
       uses: microsoft/security-devops-action@preview
