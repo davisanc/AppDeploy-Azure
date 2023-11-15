@@ -109,7 +109,7 @@ jobs:
           tools: trivy
       env:
           GDN_TRIVY_ACTION: image
-          GDN_TRIVY_IMAGEPATH: appdeployazure:${{ github.sha }} 
+          GDN_TRIVY_IMAGEPATH: nginx:alpine 
 
 
    # Upload alerts to the Security tab
