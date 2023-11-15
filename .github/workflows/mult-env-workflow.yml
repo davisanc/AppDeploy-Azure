@@ -104,7 +104,7 @@ jobs:
 
     - name: Create OCI Image
       run: |
-          docker pull nginx:latest
+          docker pull nginx:alpine
           skopeo copy docker-daemon:nginx:alpine oci:nginx
    # Run analyzers
     - name: Run Microsoft Security DevOps Analysis
