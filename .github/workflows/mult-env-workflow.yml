@@ -113,10 +113,12 @@ jobs:
       with:
           tools: trivy
           break: true
+  
       env:
           GDN_TRIVY_ACTION: image
           GDN_TRIVY_IMAGEPATH: nginx
-          GDB_TRIVY_SEVERITIES: high
+          GDB_TRIVY_SEVERITIES: low, medium
+
 
 
    # Upload alerts to the Security tab
