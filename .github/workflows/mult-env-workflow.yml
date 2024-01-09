@@ -112,9 +112,11 @@ jobs:
       id: msdo
       with:
           tools: trivy
+          break: true
       env:
           GDN_TRIVY_ACTION: image
-          GDN_TRIVY_IMAGEPATH: nginx 
+          GDN_TRIVY_IMAGEPATH: nginx
+          GDB_TRIVY_SEVERITIES: high
 
 
    # Upload alerts to the Security tab
