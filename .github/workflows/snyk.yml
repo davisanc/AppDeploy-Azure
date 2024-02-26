@@ -1,0 +1,46 @@
+name: Snyk Scan and SARIF Upload
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  snyk_scan:
+    name: Snyk Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js and Snyk CLI
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Authenticate Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      - name: Run Snyk Scan
+        run: snyk test --all-projects --json > snyk_results.json
+
+  upload_sarif:
+    name: Upload SARIF
+    needs: snyk_scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Convert Snyk JSON Results to SARIF
+        run: npx snyk-to-sarif --inputFile snyk_results.json --outputFile snyk_results.sarif
+
+      - name: Upload SARIF File
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: snyk_results.sarif
