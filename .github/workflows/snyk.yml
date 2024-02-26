@@ -30,6 +30,9 @@ jobs:
 
       - name: Run Snyk Scan
         run: snyk test --all-projects --json > snyk_results.json
+      
+      - name: Run Snyk IaC Scan
+        run: snyk iac test
 
   upload_sarif:
     name: Upload SARIF
