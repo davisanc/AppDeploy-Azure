@@ -27,6 +27,8 @@ jobs:
 
       - name: Authenticate Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
+        with: 
+          args: --sarif-file-output=snyk.sarif
 
       - name: Run Snyk Scan
         run: snyk test --all-projects --json > snyk_results.json || true
@@ -41,12 +43,17 @@ jobs:
           echo "Checking if snyk_results.json file exists:"
           ls -l snyk_results.json
 
-      - name: Upload Snyk Results as Artifact
-        if: success() || failure()  # Ensure artifact upload runs regardless of the previous step's success/failure
-        uses: actions/upload-artifact@v2
+      # - name: Upload Snyk Results as Artifact
+      #   if: success() || failure()  # Ensure artifact upload runs regardless of the previous step's success/failure
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: snyk-results
+      #     path: snyk_results.json
+
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
         with:
-          name: snyk-results
-          path: snyk_results.json
+          sarif_file: snyk.sarif
         
 
 
