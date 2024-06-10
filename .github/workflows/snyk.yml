@@ -36,6 +36,19 @@ jobs:
         run: snyk iac test
         continue-on-error: true
 
+      - name: Verify Snyk Results JSON
+        run: |
+          echo "Checking if snyk_results.json file exists:"
+          ls -l snyk_results.json
+
+      - name: Upload Snyk Results as Artifact
+        if: success() || failure()  # Ensure artifact upload runs regardless of the previous step's success/failure
+        uses: actions/upload-artifact@v2
+        with:
+          name: snyk-results
+          path: snyk_results.json
+        
+
 
   upload_sarif:
     name: Upload SARIF
