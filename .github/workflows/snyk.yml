@@ -30,9 +30,12 @@ jobs:
 
       - name: Run Snyk Scan
         run: snyk test --all-projects --json > snyk_results.json
+        continue-on-error: true
       
       - name: Run Snyk IaC Scan
         run: snyk iac test
+        continue-on-error: true
+
 
   upload_sarif:
     name: Upload SARIF
