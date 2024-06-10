@@ -32,15 +32,21 @@ jobs:
       #   run: snyk test --all-projects --json > snyk_results.json || true
       #   continue-on-error: true
       
-      - name: Run Snyk IaC Scan with snyk iac command
-        run: snyk iac test  --json > snyk_results.json || true
-        continue-on-error: true
+      # - name: Run Snyk IaC Scan with snyk iac command
+      #   run: snyk iac test  --json > snyk_results.json || true
+      #   continue-on-error: true
 
-      - name: Run Snyk to IaC scan
+      - name: Run Snyk to check configuration files for security issues
         continue-on-error: true
-        uses: snyk/actions/iac@master
+        run: snyk iac test --sarif-file-output=snyk.sarif
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      # - name: Run Snyk to IaC scan
+      #   continue-on-error: true
+      #   uses: snyk/actions/iac@master
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       # - name: Verify Snyk Results JSON
       #   run: |
