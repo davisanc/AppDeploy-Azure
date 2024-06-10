@@ -47,8 +47,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: snyk-results
-          path: .
-
+         
       - name: Verify Snyk Results JSON
         run: ls -l snyk_results.json
 
