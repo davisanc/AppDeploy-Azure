@@ -38,7 +38,11 @@ jobs:
 
       - name: Run Snyk to check configuration files for security issues
         continue-on-error: true
-        run: snyk iac test --sarif-file-output=snyk.sarif --json-file-output=snyk.json
+        run: |
+          snyk iac test --sarif-file-output=snyk.sarif --json-file-output=snyk.json
+          echo "Snyk command completed"
+          echo "Listing current directory contents:"
+          ls -alh
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
