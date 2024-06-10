@@ -62,13 +62,20 @@ jobs:
           name: snyk-results
          
       - name: Verify Snyk Results JSON
-        run: ls -l snyk_results.json
+        run: |
+          echo "Checking if snyk_results.json file was downloaded:"
+          ls -l snyk_results.json
 
       - name: Install snyk-to-sarif
         run: npm install -g snyk-to-sarif
 
       - name: Convert Snyk JSON Results to SARIF
-        run: npx snyk-to-sarif --inputFile snyk_results.json --outputFile snyk_results.sarif
+        run: |
+          npx snyk-to-sarif --inputFile snyk_results.json --outputFile snyk_results.sarif
+          if [ $? -ne 0 ]; then
+            echo "Failed to convert snyk_results.json to SARIF."
+            exit 1
+          fi
 
       - name: Verify SARIF File
         run: |
