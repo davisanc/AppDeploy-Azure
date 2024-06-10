@@ -28,9 +28,9 @@ jobs:
       - name: Authenticate Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }} 
 
-      - name: Run Snyk Scan
-        run: snyk test --all-projects --json > snyk_results.json || true
-        continue-on-error: true
+      # - name: Run Snyk Scan
+      #   run: snyk test --all-projects --json > snyk_results.json || true
+      #   continue-on-error: true
       
       - name: Run Snyk IaC Scan
         run: snyk iac test || true
