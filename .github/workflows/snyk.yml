@@ -100,6 +100,7 @@ jobs:
           fi
 
       - name: Verify SARIF File
+        if: always()
         run: |
           echo "Checking if snyk_results.sarif file was created:"
           ls -l snyk_results.sarif
