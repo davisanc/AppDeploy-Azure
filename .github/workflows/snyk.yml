@@ -48,11 +48,11 @@ jobs:
       #   env:
       #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      # - name: Verify Snyk Results JSON
-      #   run: |
-      #     echo "Checking if snyk_results.json file exists:"
-      #     ls -l snyk_results.json
-      #     cat snyk_results.json  # Display contents of the JSON file for debugging
+      - name: Verify Snyk Results SARIF
+        run: |
+          echo "Checking if snyk.sarif file exists:"
+          ls -l snyk.sarif
+          cat snyk.sarif # Display contents of the JSON file for debugging
 
           
 
