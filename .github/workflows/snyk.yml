@@ -32,24 +32,30 @@ jobs:
       #   run: snyk test --all-projects --json > snyk_results.json || true
       #   continue-on-error: true
       
-      - name: Run Snyk IaC Scan
+      - name: Run Snyk IaC Scan with snyk iac command
         run: snyk iac test  --json > snyk_results.json || true
         continue-on-error: true
 
-      - name: Verify Snyk Results JSON
-        run: |
-          echo "Checking if snyk_results.json file exists:"
-          ls -l snyk_results.json
-          cat snyk_results.json  # Display contents of the JSON file for debugging
+      - name: Run Snyk to IaC scan
+        continue-on-error: true
+        uses: snyk/actions/iac@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      # - name: Verify Snyk Results JSON
+      #   run: |
+      #     echo "Checking if snyk_results.json file exists:"
+      #     ls -l snyk_results.json
+      #     cat snyk_results.json  # Display contents of the JSON file for debugging
 
           
 
-      - name: Upload Snyk Results as Artifact
-        if: success() || failure()  # Ensure artifact upload runs regardless of the previous step's success/failure
-        uses: actions/upload-artifact@v2
-        with:
-          name: snyk-results
-          path: snyk_results.json
+      # - name: Upload Snyk Results as Artifact
+      #   if: success() || failure()  # Ensure artifact upload runs regardless of the previous step's success/failure
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: snyk-results
+      #     path: snyk_results.json
 
       # - name: Upload result to GitHub Code Scanning
       #   uses: github/codeql-action/upload-sarif@v2
@@ -76,8 +82,8 @@ jobs:
           cat snyk_results.json  # Display contents of the JSON file for debugging
 
 
-      - name: Install snyk-to-sarif
-        run: npm install -g snyk-to-sarif
+      # - name: Install snyk-to-sarif
+      #   run: npm install -g snyk-to-sarif
 
       # - name: Convert Snyk JSON Results to SARIF
       #   run: |
@@ -87,23 +93,23 @@ jobs:
       #       exit 1
       #     fi
 
-      - name: Convert Snyk JSON Results to SARIF
-        run: |
-          echo "Converting Snyk JSON Results to SARIF:"
-          if jq empty snyk_results.json; then
-            npx snyk-to-sarif --inputFile snyk_results.json --outputFile snyk_results.sarif
-            echo "Conversion complete, listing files:"
-            ls -l
-          else
-            echo "snyk_results.json is not a valid JSON. Skipping SARIF conversion."
-            echo '{}' > snyk_results.sarif  # Create an empty SARIF file to upload
-          fi
+      # - name: Convert Snyk JSON Results to SARIF
+      #   run: |
+      #     echo "Converting Snyk JSON Results to SARIF:"
+      #     if jq empty snyk_results.json; then
+      #       npx snyk-to-sarif --inputFile snyk_results.json --outputFile snyk_results.sarif
+      #       echo "Conversion complete, listing files:"
+      #       ls -l
+      #     else
+      #       echo "snyk_results.json is not a valid JSON. Skipping SARIF conversion."
+      #       echo '{}' > snyk_results.sarif  # Create an empty SARIF file to upload
+      #     fi
 
-      - name: Verify SARIF File
-        if: always()
-        run: |
-          echo "Checking if snyk_results.sarif file was created:"
-          ls -l snyk_results.sarif
+      # - name: Verify SARIF File
+      #   if: always()
+      #   run: |
+      #     echo "Checking if snyk_results.sarif file was created:"
+      #     ls -l snyk_results.sarif
 
       - name: Upload SARIF File
         if: success() || failure()  # Ensure SARIF upload runs regardless of the previous step's success/failure
