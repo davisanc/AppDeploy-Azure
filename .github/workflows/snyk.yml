@@ -116,7 +116,17 @@ jobs:
       #   run: |
       #     echo "Checking if snyk_results.sarif file was created:"
       #     ls -l snyk_results.sarif
+      - name: List files in workspace
+        run: ls -alh
 
+      - name: Check if SARIF file exists
+        run: |
+          if [ -f "snyk.sarif" ]; then
+            echo "SARIF file found."
+          else
+            echo "SARIF file not found."
+            exit 1
+          fi  
       - name: Upload SARIF File
         if: success() || failure()  # Ensure SARIF upload runs regardless of the previous step's success/failure
         uses: github/codeql-action/upload-sarif@v2
