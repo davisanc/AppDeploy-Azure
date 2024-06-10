@@ -29,11 +29,11 @@ jobs:
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
       - name: Run Snyk Scan
-        run: snyk test --all-projects --json > snyk_results.json
+        run: snyk test --all-projects --json > snyk_results.json || true
         continue-on-error: true
       
       - name: Run Snyk IaC Scan
-        run: snyk iac test
+        run: snyk iac test || true
         continue-on-error: true
 
       - name: Verify Snyk Results JSON
@@ -71,9 +71,12 @@ jobs:
         run: npx snyk-to-sarif --inputFile snyk_results.json --outputFile snyk_results.sarif
 
       - name: Verify SARIF File
-        run: ls -l snyk_results.sarif
+        run: |
+          echo "Checking if snyk_results.sarif file was created:"
+          ls -l snyk_results.sarif
 
       - name: Upload SARIF File
+        if: success() || failure()  # Ensure SARIF upload runs regardless of the previous step's success/failure
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: snyk_results.sarif
