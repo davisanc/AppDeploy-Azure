@@ -28,9 +28,6 @@ jobs:
       - name: Authenticate Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }} 
 
-     
-      
-    
       - name: Run Snyk Scan
         run: snyk test --all-projects --json > snyk_results.json || true
         continue-on-error: true
@@ -43,6 +40,9 @@ jobs:
         run: |
           echo "Checking if snyk_results.json file exists:"
           ls -l snyk_results.json
+          cat snyk_results.json  # Display contents of the JSON file for debugging
+
+          
 
       - name: Upload Snyk Results as Artifact
         if: success() || failure()  # Ensure artifact upload runs regardless of the previous step's success/failure
@@ -73,6 +73,8 @@ jobs:
         run: |
           echo "Checking if snyk_results.json file was downloaded:"
           ls -l snyk_results.json
+          cat snyk_results.json  # Display contents of the JSON file for debugging
+
 
       - name: Install snyk-to-sarif
         run: npm install -g snyk-to-sarif
