@@ -28,14 +28,6 @@ jobs:
       - name: Authenticate Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }} 
 
-      # - name: Run Snyk Scan
-      #   run: snyk test --all-projects --json > snyk_results.json || true
-      #   continue-on-error: true
-      
-      # - name: Run Snyk IaC Scan with snyk iac command
-      #   run: snyk iac test  --json > snyk_results.json || true
-      #   continue-on-error: true
-
       - name: Run Snyk to check configuration files for security issues
         continue-on-error: true
         run: |
@@ -45,12 +37,6 @@ jobs:
           ls -alh
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-      # - name: Run Snyk to IaC scan
-      #   continue-on-error: true
-      #   uses: snyk/actions/iac@master
-      #   env:
-      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Verify Snyk Results SARIF
         run: |
@@ -63,80 +49,3 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: snyk.sarif   
-
-      # - name: Upload Snyk Results as Artifact
-      #   if: success() || failure()  # Ensure artifact upload runs regardless of the previous step's success/failure
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: snyk-results
-      #     path: snyk_results.json
-
-      # - name: Upload result to GitHub Code Scanning
-      #   uses: github/codeql-action/upload-sarif@v2
-      #   with:
-      #     sarif_file: snyk.sarif
-        
-
-
-  # upload_sarif:
-  #   name: Upload SARIF
-  #   needs: snyk_scan
-  #   runs-on: ubuntu-latest
-
-    # steps:
-      # - name: Download Snyk Results
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: snyk-results
-         
-      # - name: Verify Snyk Results JSON
-      #   run: |
-      #     echo "Checking if snyk_results.json file was downloaded:"
-      #     ls -l snyk_results.json
-      #     cat snyk_results.json  # Display contents of the JSON file for debugging
-
-
-      # - name: Install snyk-to-sarif
-      #   run: npm install -g snyk-to-sarif
-
-      # - name: Convert Snyk JSON Results to SARIF
-      #   run: |
-      #     npx snyk-to-sarif --inputFile snyk_results.json --outputFile snyk_results.sarif
-      #     if [ $? -ne 0 ]; then
-      #       echo "Failed to convert snyk_results.json to SARIF."
-      #       exit 1
-      #     fi
-
-      # - name: Convert Snyk JSON Results to SARIF
-      #   run: |
-      #     echo "Converting Snyk JSON Results to SARIF:"
-      #     if jq empty snyk_results.json; then
-      #       npx snyk-to-sarif --inputFile snyk_results.json --outputFile snyk_results.sarif
-      #       echo "Conversion complete, listing files:"
-      #       ls -l
-      #     else
-      #       echo "snyk_results.json is not a valid JSON. Skipping SARIF conversion."
-      #       echo '{}' > snyk_results.sarif  # Create an empty SARIF file to upload
-      #     fi
-
-      # - name: Verify SARIF File
-      #   if: always()
-      #   run: |
-      #     echo "Checking if snyk_results.sarif file was created:"
-      #     ls -l snyk_results.sarif
-      # - name: List files in workspace
-      #   run: ls -alh
-
-      # - name: Check if SARIF file exists
-      #   run: |
-      #     if [ -f "snyk.sarif" ]; then
-      #       echo "SARIF file found."
-      #     else
-      #       echo "SARIF file not found."
-      #       exit 1
-      #     fi  
-      # - name: Upload SARIF File
-      #   if: success() || failure()  # Ensure SARIF upload runs regardless of the previous step's success/failure
-      #   uses: github/codeql-action/upload-sarif@v2
-      #   with:
-      #     sarif_file: snyk.sarif
