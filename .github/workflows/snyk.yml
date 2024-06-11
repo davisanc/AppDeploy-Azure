@@ -58,7 +58,11 @@ jobs:
           ls -l snyk.sarif
           cat snyk.sarif # Display contents of the JSON file for debugging
 
-          
+      - name: Upload SARIF File
+        if: success() || failure()  # Ensure SARIF upload runs regardless of the previous step's success/failure
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif   
 
       # - name: Upload Snyk Results as Artifact
       #   if: success() || failure()  # Ensure artifact upload runs regardless of the previous step's success/failure
