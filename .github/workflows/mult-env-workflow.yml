@@ -64,6 +64,15 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
+    # Install the latest Docker version and Skopeo tool
+    - name: Install Docker and Skopeo
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker.io
+        sudo apt-get install -y skopeo
+        sudo systemctl start docker
+        sudo systemctl enable docker
+
     # Build and push Docker image
     - name: Build and push
       id: docker_build
