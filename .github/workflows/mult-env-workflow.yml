@@ -67,11 +67,21 @@ jobs:
     # Install the latest Docker version and Skopeo tool
     - name: Install Docker and Skopeo
       run: |
-        sudo apt-get update
-        sudo apt-get install -y docker.io
-        sudo apt-get install -y skopeo
-        sudo systemctl start docker
-        sudo systemctl enable docker
+
+          # Install Docker from the official Docker repository
+          sudo apt-get update
+          sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+          sudo apt-get update
+          sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+          # Start Docker service
+          sudo systemctl enable docker
+          sudo systemctl start docker
+
+          # Install Skopeo
+          sudo apt-get install -y skopeo
 
     # Build and push Docker image
     - name: Build and push
