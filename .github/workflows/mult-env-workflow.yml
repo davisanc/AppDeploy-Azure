@@ -68,7 +68,7 @@ jobs:
     # Set up Docker Buildx
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
-      
+
     # Install Skopeo to convert nginx into OCI image
     - name: Install skopeo
       run: |
@@ -116,8 +116,10 @@ jobs:
 
     - name: Create OCI Image
       run: |
-          docker pull nginx:alpine
-          skopeo copy docker-daemon:nginx:alpine oci:nginx
+          # docker pull nginx:alpine
+          # skopeo copy docker-daemon:nginx:alpine oci:nginx
+           skopeo copy docker://nginx:alpine oci:nginx
+
    # Run analyzers
     - name: Run Microsoft Security DevOps Analysis
       uses: microsoft/security-devops-action@preview
