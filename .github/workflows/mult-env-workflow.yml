@@ -122,10 +122,10 @@ jobs:
 
    # Run analyzers
     - name: Run Microsoft Security DevOps Analysis
-      uses: microsoft/security-devops-action@preview
+      uses: microsoft/security-devops-action@latest
       id: msdo
-      with:
-          tools: trivy
+      #with:
+          #tools: trivy
          # break: true
   
       env:
